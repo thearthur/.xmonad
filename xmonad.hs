@@ -3,6 +3,7 @@ import XMonad.Config.Gnome
 import XMonad.Layout.NoBorders
 import XMonad.ManageHook
 import XMonad.Actions.CycleRecentWS
+import XMonad.Layout.ShowWName
 import qualified Data.Map as M
 
 
@@ -18,7 +19,7 @@ myKeys (XConfig {modMask = modm}) = M.fromList $
 main = xmonad gnomeConfig
        {
        modMask = mod4Mask
-       , layoutHook = smartBorders $ layoutHook defaultConfig
+       , layoutHook = showWName $ smartBorders $ layoutHook defaultConfig
        , manageHook = manageHook gnomeConfig <+> composeAll myManageHook
        , keys = \c -> myKeys c `M.union` keys gnomeConfig c
        }
