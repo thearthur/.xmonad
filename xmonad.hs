@@ -19,7 +19,7 @@ myKeys (XConfig {modMask = modm}) = M.fromList $
 main = xmonad gnomeConfig
        {
        modMask = mod4Mask
-       , layoutHook = showWName $ smartBorders $ layoutHook defaultConfig
+       , layoutHook = smartBorders $ layoutHook defaultConfig
        , manageHook = manageHook gnomeConfig <+> composeAll myManageHook
        , keys = \c -> myKeys c `M.union` keys gnomeConfig c
        }
