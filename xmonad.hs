@@ -333,6 +333,7 @@ myKeys = myKeyBindings ++
 main = do
   stalonetrayproc <- spawnPipe "killall stalonetray ; stalonetray   --icon-gravity E   --geometry 3x1-0+0   --max-geometry 5x1-0+0   --background '#000000'   --skip-taskbar   --icon-size 16   --kludges force_icons_size   --window-strut none 2>&1 >/dev/null &"
   fixcapslockproc <- spawnPipe "/usr/bin/setxkbmap -option ctrl:nocaps"
+  xsetrootproc <- spawnPipe "xsetroot -solid black"
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
     focusedBorderColor = myFocusedBorderColor
