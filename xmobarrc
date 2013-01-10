@@ -13,7 +13,7 @@
 Config { 
   -- Set font and default foreground/background colors. Note that
   -- the height of xmobar is controlled by the font you use.
-  font = "xft:Ubuntu Mono-14",
+  font = "xft:Ubuntu Mono-10",
   bgColor = "black",
   fgColor = "grey",
 
@@ -46,9 +46,9 @@ Config {
     -- based upon your specific hardware. Or, for a desktop you may want
     -- to just remove this section entirely.
     Run Battery [
-      "-t", "<acstatus>: <left>%", 
+      "-t", "<acstatus>: <left>% <timeleft>", 
       "--", 
-      "-c", "charge_full",
+      "-c", "energy_full",
       "-O", "AC",
       "-o", "Bat",
       "-h", "green",
