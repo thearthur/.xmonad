@@ -87,12 +87,12 @@ myUrgentWSRight = "}"
 myWorkspaces =
   [
     "7:Chat",  "8:Dbg", "9:Pix",
-    "4:Docs",  "5:Dev", "6:Web",
-    "1:Term",  "2:Hub", "3:Mail",
-    "0:VM",    "Extr1", "Extr2"
+    "4:Code",  "5:Code", "6:Code",
+    "1:Web",  "2:Dev", "3:Dev",
+    "0:Org",  "IRC", "Extr2"
   ]
 
-startupWorkspace = "5:Dev"  -- which workspace do you want to be on after launch?
+startupWorkspace = "1:Web"  -- which workspace do you want to be on after launch?
 
 {-
   Layout configuration. In this section we identify which xmonad
@@ -118,12 +118,12 @@ defaultLayouts = smartBorders(avoidStruts(
   -- and remaining windows tile on the right. By default each area
   -- takes up half the screen, but you can resize using "super-h" and
   -- "super-l".
-  ResizableTall 1 (3/100) (1/2) []
+  -- ResizableTall 1 (3/100) (1/2) []
 
   -- Mirrored variation of ResizableTall. In this layout, the large
   -- master window is at the top, and remaining windows tile at the
   -- bottom of the screen. Can be resized as described above.
-  ||| Mirror (ResizableTall 1 (3/100) (1/2) [])
+  Mirror (ResizableTall 1 (3/100) (1/2) [])
 
   -- Full layout makes every window full screen. When you toggle the
   -- active window, it will bring the active window to the front.
@@ -139,11 +139,12 @@ defaultLayouts = smartBorders(avoidStruts(
   -- the available space. Remaining windows tile to both the left and
   -- right of the master window. You can resize using "super-h" and
   -- "super-l".
-  ||| ThreeColMid 1 (3/100) (3/4)
+  -- ||| ThreeColMid 1 (3/100) (3/4)
 
   -- Circle layout places the master window in the center of the screen.
   -- Remaining windows appear in a circle around it
-  ||| Circle))
+  -- ||| Circle
+  ))
 
 
 -- Here we define some layouts which will be assigned to specific
@@ -155,7 +156,7 @@ defaultLayouts = smartBorders(avoidStruts(
 -- identified using the myIMRosterTitle variable, and by default is
 -- configured for Empathy, so if you're using something else you
 -- will want to modify that variable.
-chatLayout = avoidStruts(withIM (1%7) (Title myIMRosterTitle) Grid)
+-- chatLayout = avoidStruts(withIM (1%7) (Title myIMRosterTitle) Grid)
 
 -- The GIMP layout uses the ThreeColMid layout. The traditional GIMP
 -- floating panels approach is a bit of a challenge to handle with xmonad;
@@ -168,9 +169,9 @@ gimpLayout = smartBorders(avoidStruts(ThreeColMid 1 (3/100) (3/4)))
 -- Here we combine our default layouts with our specific, workspace-locked
 -- layouts.
 myLayouts =
-  onWorkspace "7:Chat" chatLayout
-  $ onWorkspace "9:Pix" gimpLayout
-  $ defaultLayouts
+--  onWorkspace "7:Chat" chatLayout
+--  $ onWorkspace "9:Pix" gimpLayout
+  defaultLayouts
 
 
 {-
