@@ -30,6 +30,8 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Actions.Plane
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
+import XMonad.Prompt
+import XMonad.Prompt.Window
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import Data.Ratio ((%))
@@ -208,6 +210,8 @@ myKeyBindings =
     , ((0, 0x1008FF12), spawn "amixer -q set Master toggle")
     , ((0, 0x1008FF11), spawn "amixer -q set Master 10%-")
     , ((0, 0x1008FF13), spawn "amixer -q set Master 10%+")
+    , ((myModMask .|. shiftMask, xK_g     ), windowPromptGoto  defaultXPConfig { autoComplete = Just 500000 })
+    , ((myModMask .|. shiftMask, xK_b     ), windowPromptBring defaultXPConfig)
   ]
 
 

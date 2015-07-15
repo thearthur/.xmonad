@@ -62,3 +62,5 @@ fi
 # Commented by default as it is assumed many users will not want this.
 # xinput set-button-map 10 1 0 3 4 5 6 7
 
+gpg-agent --enable-ssh-support --daemon > .gpg-agent-init
+echo foo > ~/foo
