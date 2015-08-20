@@ -63,4 +63,4 @@ fi
 # xinput set-button-map 10 1 0 3 4 5 6 7
 
 gpg-agent --enable-ssh-support --daemon > .gpg-agent-init
-echo foo > ~/foo
+xscreensaver &
