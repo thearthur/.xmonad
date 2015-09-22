@@ -48,6 +48,10 @@ if [ -z "$(pgrep udiskie)" ] ; then
     udiskie --tray &
 fi
 
+if [ -z "$(pgrep scudcloud)" ] ; then
+    scudcloud --minimized &
+fi
+
 
 # On login, we unlock the ssh keychain so we're not prompted for 
 # passphrases later. We pipe /dev/null to ssh-add to make it realize 
