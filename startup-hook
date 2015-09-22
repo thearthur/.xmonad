@@ -31,10 +31,14 @@ if [ -z "$(pgrep gnome-do)" ] ; then
     gnome-do -s &
 fi
 
-if [ -z "$(pgrep gpg-agent)" ] ; then
-    gpg-agent --enable-ssh-support --daemon > ~/.gpg-agent-init
-    source ~/.gpg-agent-init 
-fi
+##
+# I now use envoy and pam to do this at login
+#
+
+# if [ -z "$(pgrep gpg-agent)" ] ; then
+#     gpg-agent --enable-ssh-support --daemon > ~/.gpg-agent-init
+#     source ~/.gpg-agent-init 
+# fi
 
 if [ -z "$(pgrep xscreensaver)" ] ; then
     xscreensaver &
