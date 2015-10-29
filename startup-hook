@@ -30,6 +30,18 @@ fi
 if [ -z "$(pgrep gnome-do)" ] ; then
     gnome-do -s &
 fi
+~/.xmonad/xrandr-dualhead-bigger-vertical.sh
+#killall stalonetray ;
+if [ -z "$(pgrep stalonetray)" ] ; then
+stalonetray   --icon-gravity E \
+              --geometry 6x1-0+0 \
+              --max-geometry 10x1-0+0 \
+              --background '#000000' \
+              --skip-taskbar \
+              --icon-size 16 \
+              --kludges force_icons_size \
+              --window-strut none 2>&1 >/dev/null &
+fi
 
 ##
 # I now use envoy and pam to do this at login
@@ -41,21 +53,22 @@ fi
 # fi
 
 if [ -z "$(pgrep xscreensaver)" ] ; then
-    xscreensaver &
+    xscreensaver -no-splash &
 fi
 
 if [ -z "$(pgrep udiskie)" ] ; then
     udiskie --tray &
-fi
-
-if [ -z "$(pgrep scudcloud)" ] ; then
-    scudcloud --minimized &
+    sleep 1
 fi
 
 if [ -z "$(pgrep clementine)" ] ; then
     clementine -y &
+    sleep 1
 fi
 
+if [ -z "$(ps -ef | grep scudcloud | grep -v grep)" ] ; then
+    scudcloud --minimized true &
+fi
 
 # On login, we unlock the ssh keychain so we're not prompted for 
 # passphrases later. We pipe /dev/null to ssh-add to make it realize 
@@ -67,3 +80,10 @@ fi
 # export SSH_ASKPASS="/usr/bin/ssh-askpass"
 # cat /dev/null | ssh-add &
 
+xrandr | grep -q 'HDMI1 connected' 
+r=$?
+
+#if [ 0 -eq r ]
+#then
+    ~/.xmonad/xrandr-dualhead-bigger-vertical.sh
+#fi

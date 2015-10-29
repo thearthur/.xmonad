@@ -45,7 +45,7 @@ myModMask            = mod4Mask       -- changes the mod key to "super"
 myFocusedBorderColor = "#ff0000"      -- color of focused border
 myNormalBorderColor  = "#cccccc"      -- color of inactive border
 myBorderWidth        = 1              -- width of border around windows
-myTerminal           = "terminator"   -- which terminal software to use
+myTerminal           = "gnome-terminal"   -- which terminal software to use
 myIMRosterTitle      = "Contact List" -- title of roster on IM workspace
 
 
@@ -337,7 +337,7 @@ myKeys = myKeyBindings ++
 -}
 
 main = do
-  stalonetrayproc <- spawnPipe "killall stalonetray ; stalonetray   --icon-gravity E   --geometry 6x1-0+0   --max-geometry 10x1-0+0   --background '#000000'   --skip-taskbar   --icon-size 16   --kludges force_icons_size   --window-strut none 2>&1 >/dev/null &"
+--  stalonetrayproc <- spawnPipe "killall stalonetray ; stalonetray   --icon-gravity E   --geometry 6x1-0+0   --max-geometry 10x1-0+0   --background '#000000'   --skip-taskbar   --icon-size 16   --kludges force_icons_size   --window-strut none 2>&1 >/dev/null &"
   fixcapslockproc <- spawnPipe "/usr/sbin/setxkbmap -option ctrl:nocaps"
   xsetrootproc <- spawnPipe "xsetroot -solid black"
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"

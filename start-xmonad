@@ -39,13 +39,8 @@ xcompmgr -n &
 # Activate primary screen 
 xrandr --output LVDS-1 --auto --primary
 
-# If we find that a screen is connected via VGA, activate it and position it
+# If we find that a screen is connected via HDMI, activate it and position it
 # to the left of the primary screen.
-xrandr | grep 'VGA-1 connected' | ifne xrandr --output VGA-1 --auto --left-of LVDS-1
-
-# If we find that a screen is connected via DVI, activate it and position it
-# to the left of the primary screen.
-xrandr | grep 'DP-1 connected' | ifne xrandr --output DP-1 --auto --left-of LVDS-1
 
 
 #
@@ -53,7 +48,7 @@ xrandr | grep 'DP-1 connected' | ifne xrandr --output DP-1 --auto --left-of LVDS
 #
 
 # To set your backgrounds, run nitrogren /path/to/images
-nitrogen --restore &
+# nitrogen --restore &
 
 
 #
@@ -80,23 +75,22 @@ nitrogen --restore &
 # - window-strut "none" means windows are allowed to cover the tray. In
 #   other words, trust xmonad to handle this part.
 #
-stalonetray \
-  --icon-gravity E \
-  --geometry 5x1-0+0 \
-  --max-geometry 5x1-0+0 \
-  --background '#000000' \
-  --skip-taskbar \
-  --icon-size 24 \
-  --kludges force_icons_size \
-  --window-strut none \
-&
-echo foo > /home/arthur/foo
-eval "$(gpg-agent --enable-ssh-support --daemon)"
+# stalonetray \
+#   --icon-gravity E \
+#   --geometry 5x1-0+0 \
+#   --max-geometry 5x1-0+0 \
+#   --background '#000000' \
+#   --skip-taskbar \
+#   --icon-size 24 \
+#   --kludges force_icons_size \
+#   --window-strut none \
+# &
+
 # Run the gnome-keyring-daemon to avoid issues you otherwise may encounter
 # when using gnome applications which expect access to the keyring, such
 # as Empathy. This prevents prompts you may otherwise get for invalid
 # certificates and the like.
-gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
+# gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh
 
 # Now, finally, start xmonad
 exec xmonad
