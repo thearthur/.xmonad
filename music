@@ -1,5 +1,6 @@
 #!/bin/sh
 
 xdotool mousemove 9999 0
-xdotool mousemove_relative -p 270 60
+xdotool mousemove_relative -p 270 40
+xdotool mousemove_relative -p 180 10
 xdotool click 2
