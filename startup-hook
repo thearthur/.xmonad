@@ -66,6 +66,11 @@ if [ -z "$(pgrep clementine)" ] ; then
     sleep 1
 fi
 
+if [ -z "$(pgrep clementine)" ] ; then
+    syncthing-gtk -m &
+    sleep 1
+fi
+
 if [ -z "$(ps -ef | grep scudcloud | grep -v grep)" ] ; then
     scudcloud --minimized true &
 fi
