@@ -20,6 +20,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.IM
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Column
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Circle
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -141,11 +142,12 @@ defaultLayouts = smartBorders(avoidStruts(
   -- the available space. Remaining windows tile to both the left and
   -- right of the master window. You can resize using "super-h" and
   -- "super-l".
-  -- ||| ThreeColMid 1 (3/100) (3/4)
+  ||| Mirror (ThreeColMid 1 (3/100) (3/4))
 
   -- Circle layout places the master window in the center of the screen.
   -- Remaining windows appear in a circle around it
   -- ||| Circle
+  ||| Column 2.0
   ))
 
 
