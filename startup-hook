@@ -30,7 +30,10 @@ fi
 if [ -z "$(pgrep gnome-do)" ] ; then
     gnome-do -s &
 fi
-~/.xmonad/xrandr-dualhead-bigger-vertical.sh
+
+/usr/sbin/setxkbmap -option ctrl:nocaps
+xsetroot -solid black
+
 #killall stalonetray ;
 if [ -z "$(pgrep stalonetray)" ] ; then
 stalonetray   --icon-gravity E \
@@ -71,8 +74,8 @@ if [ -z "$(pgrep clementine)" ] ; then
     sleep 1
 fi
 
-if [ -z "$(ps -ef | grep scudcloud | grep -v grep)" ] ; then
-    scudcloud --minimized true &
+if [ -z "$(ps -ef | grep slack | grep -v grep)" ] ; then
+    /usr/bin/slack &
 fi
 
 # On login, we unlock the ssh keychain so we're not prompted for 
@@ -88,7 +91,16 @@ fi
 xrandr | grep -q 'HDMI1 connected' 
 r=$?
 
-#if [ 0 -eq r ]
-#then
+if [ 0 -eq r ]
+then
     ~/.xmonad/xrandr-dualhead-bigger-vertical.sh
-#fi
+fi
+
+xrandr | grep -q 'VGA1 connected'
+r=$?
+
+if [ 0 -eq r ]
+then
+    xrandr --output HDMI1 --off
+    xrandr --output VGA1  --mode 1280x1024 --left-of LVDS1 --rotate left --output LVDS1 --rotate normal
+fi

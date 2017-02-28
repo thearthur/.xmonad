@@ -10,7 +10,9 @@
        get to a stable place again.
     4. Repeat
 
-  Author:     David Brewer
+  Author:     Arthur Ulfeldt
+
+  Originally from:     David Brewer
   Repository: https://github.com/davidbrewer/xmonad-ubuntu-conf
 -}
 
@@ -36,6 +38,10 @@ import XMonad.Prompt.Window
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import Data.Ratio ((%))
+
+import XMonad.Util.EZConfig(additionalKeysP)
+import XMonad.Layout.NoBorders(smartBorders)
+import XMonad.Hooks.ManageHelpers
 
 {-
   Xmonad configuration variables. These settings control some of the
@@ -89,9 +95,9 @@ myUrgentWSRight = "}"
 
 myWorkspaces =
   [
-    "7:Chat",  "8:Dbg", "9:Pix",
-    "4:Code",  "5:Code", "6:Code",
-    "1:Web",  "2:Dev", "3:Dev",
+    "7",  "8", "9",
+    "4",  "5", "6",
+    "1:Web",  "2", "3",
     "0:Org",  "IRC", "Extr2"
   ]
 
@@ -173,9 +179,9 @@ gimpLayout = smartBorders(avoidStruts(ThreeColMid 1 (3/100) (3/4)))
 -- Here we combine our default layouts with our specific, workspace-locked
 -- layouts.
 myLayouts =
---  onWorkspace "7:Chat" chatLayout
---  $ onWorkspace "9:Pix" gimpLayout
-  defaultLayouts
+--  onWorkspace "7" chatLayout
+--  $ onWorkspace "9" gimpLayout
+    defaultLayouts
 
 
 {-
@@ -275,7 +281,6 @@ myManagementHooks = [
   , (className =? "Gimp-2.8") --> doF (W.shift "9:Pix")
   ]
 
-
 {-
   Workspace navigation keybindings. This is probably the part of the
   configuration I have spent the most time messing with, but understand
@@ -338,30 +343,34 @@ myKeys = myKeyBindings ++
   content into it via the logHook..
 -}
 
-main = do
---  stalonetrayproc <- spawnPipe "killall stalonetray ; stalonetray   --icon-gravity E   --geometry 6x1-0+0   --max-geometry 10x1-0+0   --background '#000000'   --skip-taskbar   --icon-size 16   --kludges force_icons_size   --window-strut none 2>&1 >/dev/null &"
-  fixcapslockproc <- spawnPipe "/usr/sbin/setxkbmap -option ctrl:nocaps"
-  xsetrootproc <- spawnPipe "xsetroot -solid black"
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobarrc"
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
-    focusedBorderColor = myFocusedBorderColor
-  , normalBorderColor = myNormalBorderColor
-  , terminal = myTerminal
-  , borderWidth = myBorderWidth
-  , layoutHook = myLayouts
-  , workspaces = myWorkspaces
-  , modMask = myModMask
-  , handleEventHook = fullscreenEventHook
-  , startupHook = do
-      setWMName "LG3D"
-      windows $ W.greedyView startupWorkspace
-      spawn "~/.xmonad/startup-hook"
-  , manageHook = manageHook defaultConfig
-      <+> composeAll myManagementHooks
-      <+> manageDocks
-  , logHook = dynamicLogWithPP $ xmobarPP {
-      ppOutput = hPutStrLn xmproc
-      , ppTitle = xmobarColor myTitleColor "" . shorten myTitleLength
+
+
+myConfig = defaultConfig
+	{ manageHook = ( isFullscreen --> doFullFloat )
+                       <+> manageDocks
+                       <+> manageHook defaultConfig
+                       <+> composeAll myManagementHooks
+        , layoutHook = myLayouts
+        , terminal = myTerminal
+        , borderWidth = myBorderWidth
+        , normalBorderColor = myNormalBorderColor
+        , focusedBorderColor = myFocusedBorderColor
+        , handleEventHook = fullscreenEventHook
+        , modMask = myModMask
+        , workspaces = myWorkspaces
+        , startupHook = do
+                         setWMName "xmonad"
+                         windows $ W.greedyView startupWorkspace
+                         spawn "~/.xmonad/startup-hook"
+	} `additionalKeys` myKeys
+
+
+-- Command to launch the bar.
+myBar = "xmobar ~/.xmonad/xmobarrc"
+
+-- Custom PP, configure it as you like. It determines what is being written to the bar.
+myPP = xmobarPP {
+        ppTitle = xmobarColor myTitleColor "" . shorten myTitleLength
       , ppCurrent = xmobarColor myCurrentWSColor ""
         . wrap myCurrentWSLeft myCurrentWSRight
       , ppVisible = xmobarColor myVisibleWSColor ""
@@ -369,5 +378,10 @@ main = do
       , ppUrgent = xmobarColor myUrgentWSColor ""
         . wrap myUrgentWSLeft myUrgentWSRight
     }
-  }
-    `additionalKeys` myKeys
+
+-- Key binding to toggle the gap for the bar.
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
+-- The main function.
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+
