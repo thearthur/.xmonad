@@ -215,9 +215,13 @@ myKeyBindings =
     , ((myModMask, xK_z), sendMessage MirrorExpand)
     , ((myModMask, xK_p), spawn "gnome-do")
     , ((myModMask, xK_u), focusUrgent)
-    , ((0, 0x1008FF12), spawn "amixer -q set Master toggle")
-    , ((0, 0x1008FF11), spawn "amixer -q set Master 10%-")
-    , ((0, 0x1008FF13), spawn "amixer -q set Master 10%+")
+    , ((myModMask .|. mod1Mask .|. controlMask .|. shiftMask , xK_m), do spawn "amixer -q set Master toggle"
+                                                                         spawn "amixer -q set Headphone unmute")
+    , ((myModMask .|. mod1Mask .|. controlMask, xK_m), spawn "clementine --play-pause")
+    , ((myModMask .|. mod1Mask .|. controlMask, xK_j), spawn "amixer -q set Master 10%-")
+    , ((myModMask .|. mod1Mask .|. controlMask, xK_k), spawn "amixer -q set Master 10%+")
+    , ((myModMask .|. mod1Mask .|. controlMask, xK_h), spawn "clementine --previous")
+    , ((myModMask .|. mod1Mask .|. controlMask, xK_l), spawn "clementine --next")
     , ((myModMask .|. shiftMask, xK_g     ), windowPromptGoto  defaultXPConfig { autoComplete = Just 500000 })
     , ((myModMask .|. shiftMask, xK_b     ), windowPromptBring defaultXPConfig)
   ]
