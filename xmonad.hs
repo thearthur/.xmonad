@@ -49,8 +49,8 @@ import XMonad.Hooks.ManageHelpers
 -}
 
 myModMask            = mod4Mask       -- changes the mod key to "super"
-myFocusedBorderColor = "#ff0000"      -- color of focused border
-myNormalBorderColor  = "#cccccc"      -- color of inactive border
+myFocusedBorderColor = "#ff88aa"      -- color of focused border
+myNormalBorderColor  = "#aaaaff"      -- color of inactive border
 myBorderWidth        = 1              -- width of border around windows
 myTerminal           = "gnome-terminal"   -- which terminal software to use
 myIMRosterTitle      = "Contact List" -- title of roster on IM workspace
@@ -61,7 +61,7 @@ myIMRosterTitle      = "Contact List" -- title of roster on IM workspace
   of text which xmonad is sending to xmobar via the DynamicLog hook.
 -}
 
-myTitleColor     = "#eeeeee"  -- color of window title
+myTitleColor     = "#40f08f"  -- color of window title
 myTitleLength    = 80         -- truncate window title to this length
 myCurrentWSColor = "#e6744c"  -- color of active workspace
 myVisibleWSColor = "#c185a7"  -- color of inactive workspace
@@ -222,6 +222,7 @@ myKeyBindings =
     , ((myModMask .|. mod1Mask .|. controlMask, xK_k), spawn "amixer -q set Master 10%+")
     , ((myModMask .|. mod1Mask .|. controlMask, xK_h), spawn "clementine --previous")
     , ((myModMask .|. mod1Mask .|. controlMask, xK_l), spawn "clementine --next")
+    , ((myModMask .|. mod1Mask .|. controlMask, xK_e), spawn "emacsclient -c -n -e '(switch-to-buffer nil)'")
     , ((myModMask .|. shiftMask, xK_g     ), windowPromptGoto  defaultXPConfig { autoComplete = Just 500000 })
     , ((myModMask .|. shiftMask, xK_b     ), windowPromptBring defaultXPConfig)
   ]
@@ -350,23 +351,22 @@ myKeys = myKeyBindings ++
 
 
 myConfig = defaultConfig
-	{ manageHook = ( isFullscreen --> doFullFloat )
-                       <+> manageDocks
-                       <+> manageHook defaultConfig
-                       <+> composeAll myManagementHooks
-        , layoutHook = myLayouts
-        , terminal = myTerminal
-        , borderWidth = myBorderWidth
-        , normalBorderColor = myNormalBorderColor
-        , focusedBorderColor = myFocusedBorderColor
-        , handleEventHook = fullscreenEventHook
-        , modMask = myModMask
-        , workspaces = myWorkspaces
-        , startupHook = do
-                         setWMName "xmonad"
-                         windows $ W.greedyView startupWorkspace
-                         spawn "~/.xmonad/startup-hook"
-	} `additionalKeys` myKeys
+           { manageHook = ( isFullscreen --> doFullFloat )
+                          <+> manageDocks
+                          <+> manageHook defaultConfig
+                          <+> composeAll myManagementHooks
+           , layoutHook = myLayouts
+           , terminal = myTerminal
+           , borderWidth = myBorderWidth
+           , normalBorderColor = myNormalBorderColor
+           , focusedBorderColor = myFocusedBorderColor
+           , handleEventHook = fullscreenEventHook
+           , modMask = myModMask
+           , workspaces = myWorkspaces
+           , startupHook = do setWMName "xmonad"
+                              windows $ W.greedyView startupWorkspace
+                              spawn "~/.xmonad/startup-hook"
+           } `additionalKeys` myKeys
 
 
 -- Command to launch the bar.
