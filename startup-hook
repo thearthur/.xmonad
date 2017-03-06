@@ -17,16 +17,11 @@ if [ -z "$(pgrep nm-applet)" ] ; then
     nm-applet --sm-disable &
 fi
 
-# Applet for managing print jobs from the tray.
-if [ -z "$(pgrep system-config-printer-applet)" ] ; then
-    system-config-printer-applet &
-fi
-
 #
 # APPLICATION LAUNCHER
 #
 
-# Use synapse as our app launcher. (-s: don't display until requested) 
+# Use gnome do as our app launcher. (-s: don't display until requested)
 if [ -z "$(pgrep gnome-do)" ] ; then
     gnome-do -s &
 fi
@@ -34,17 +29,19 @@ fi
 /usr/sbin/setxkbmap -option ctrl:nocaps
 xsetroot -solid black
 
-#killall stalonetray ;
+killall stalonetray
 if [ -z "$(pgrep stalonetray)" ] ; then
 stalonetray   --icon-gravity E \
               --geometry 6x1-0+0 \
               --max-geometry 10x1-0+0 \
-              --background '#000000' \
+              --background '#223333' \
               --skip-taskbar \
               --icon-size 16 \
               --kludges force_icons_size \
               --window-strut none 2>&1 >/dev/null &
 fi
+
+zsh -ic "/usr/bin/emacs --daemon"
 
 ##
 # I now use envoy and pam to do this at login
@@ -61,21 +58,10 @@ fi
 
 if [ -z "$(pgrep udiskie)" ] ; then
     udiskie --tray &
-    sleep 1
 fi
 
 if [ -z "$(pgrep clementine)" ] ; then
     clementine -y &
-    sleep 1
-fi
-
-if [ -z "$(pgrep clementine)" ] ; then
-    syncthing-gtk -m &
-    sleep 1
-fi
-
-if [ -z "$(ps -ef | grep slack | grep -v grep)" ] ; then
-    /usr/bin/slack &
 fi
 
 # On login, we unlock the ssh keychain so we're not prompted for 
@@ -85,8 +71,8 @@ fi
 # If you don't use the ssh keychain you may not want this. Commented
 # by default as it is assumed many users will not want this feature.
 
-# export SSH_ASKPASS="/usr/bin/ssh-askpass"
-# cat /dev/null | ssh-add &
+export SSH_ASKPASS="/usr/bin/ssh-askpass"
+cat /dev/null | ssh-add &
 
 xrandr | grep -q 'HDMI1 connected' 
 r=$?
