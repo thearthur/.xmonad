@@ -1,17 +1,6 @@
-xrandr --output eDP1 \
-       --primary \
-       --mode 3200x1800 \
-       --pos 0x0 \
-       --rotate normal \
-
-xrandr --output DP1-2 \
-       --mode 1680x1050 \
-       --pos 5040x1800 \
-       --rotate left \
-       --scale 2x2
-
-xrandr --output DP1-3 \
-       --mode 1280x1024 \
-       --pos 3880x-500 \
-       --rotate normal \
-       --scale 2x2 \
+xrandr --output eDP1 --scale 1.0x1.0
+#xrandr --output DP1-3  --mode 1280x1024  --left-of eDP1
+xrandr --output DP1-1 --mode 1680x1050 --left-of eDP1  --rotate right
+xrandr --output DP1-2 --mode 1680x1050 --left-of DP1-1 --rotate left
+xrandr --output eDP1 --scale 0.5x0.5
+xinput --map-to-output 10 eDP1

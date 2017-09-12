@@ -79,7 +79,7 @@ r=$?
 
 if [ 0 -eq r ]
 then
-    ~/.xmonad/xrandr-dualhead-bigger-vertical.sh
+#    ~/.xmonad/xrandr-dualhead-bigger-vertical.sh
 fi
 
 xrandr | grep -q 'VGA1 connected'
@@ -87,6 +87,6 @@ r=$?
 
 if [ 0 -eq r ]
 then
-    xrandr --output HDMI1 --off
-    xrandr --output VGA1  --mode 1280x1024 --left-of LVDS1 --rotate left --output LVDS1 --rotate normal
+#    xrandr --output HDMI1 --off
+#    xrandr --output VGA1  --mode 1280x1024 --left-of LVDS1 --rotate left --output LVDS1 --rotate normal
 fi

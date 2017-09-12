@@ -215,8 +215,8 @@ myKeyBindings =
     , ((myModMask, xK_z), sendMessage MirrorExpand)
     , ((myModMask, xK_p), spawn "gnome-do")
     , ((myModMask, xK_u), focusUrgent)
-    , ((myModMask .|. mod1Mask .|. controlMask .|. shiftMask , xK_m), do spawn "amixer -q set Master toggle"
-                                                                         spawn "amixer -q set Headphone unmute")
+    , ((myModMask .|. mod1Mask .|. controlMask .|. shiftMask , xK_m), do spawn "amixer -q -D pulse set Master toggle"
+                                                                         spawn "amixer -q -D pulse set Headphone unmute")
     , ((myModMask .|. mod1Mask .|. controlMask, xK_m), spawn "clementine --play-pause")
     , ((myModMask .|. mod1Mask .|. controlMask, xK_j), spawn "amixer -q set Master 10%-")
     , ((myModMask .|. mod1Mask .|. controlMask, xK_k), spawn "amixer -q set Master 10%+")
@@ -388,4 +388,3 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 -- The main function.
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
-
